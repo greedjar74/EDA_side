@@ -12,27 +12,21 @@ def get_missing_value(data):
 
 
 # 데이터 읽어오기
-#data1 = pd.read_csv('/Users/kimhongseok/EDA_side/data/1.csv', encoding='cp949')
-#data2 = pd.read_csv('/Users/kimhongseok/EDA_side/data/2.csv', encoding='cp949')
-data3 = pd.read_csv('/Users/kimhongseok/EDA_side/data/3.csv', encoding='cp949')
+data = pd.read_csv('/Users/kimhongseok/EDA_side/data/3.csv', encoding='cp949')
 
-#data1_shape = data1.shape
-#data2_shape = data2.shape
-data3_shape = data3.shape
+datad_shape = data.shape
 
-# col 확인
-#print(get_cols(data1))
-#print(get_cols(data2))
-print(get_cols(data3))
+# col 확인 -> 사용자로부터 예측 모델의 결과 변수를 선택할 수 있게 한다.
+print(get_cols(data))
+print()
+target = input("결과 변수를 선택하세요 : ")
+
+# 데이터타입, 결측치 등을 확인 -> 사용자로부터 결측치의 범위 등을 어떻게 처리할지 선택할 수 있게 한다.
+print(data.info())
 print()
 
-# 데이터타입, 결측치 등을 확인
-#print(data1.info())
-#print()
-#print(data2.info())
-#print()
-print(data3.info())
-print()
-
-print(set(data3['등급'].to_list()))
+# 숫자형 데이터에 대한 정보
+print(data.describe())
+# 문자형 데이터에 대한 정보
+print(set(data['등급'].to_list()))
 print()
