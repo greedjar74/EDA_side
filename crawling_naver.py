@@ -42,7 +42,7 @@ driver.find_element(By.CLASS_NAME, 'pgRR').click()
 last_page = driver.find_element(By.CLASS_NAME, 'Nnavi').find_element(By.CLASS_NAME, 'on').text
 
 df = [] # 결과 파일
-for page in range(1, 100+1): # int(last_page) + 1으로 바꿔주기
+for page in range(1, int(last_page)): # int(last_page)으로 하면 마지막 페이지는 크롤링 불가 -> but 마지막 페이지의 경우 데이터가 없는 칸이 존재할 수 있다. 이를 처리하는 것이 힘들어 마지막 페이지는 사용하지 않는거..
     url = current_url + f'&page={page}' # 페이지를 바꿔가면서 크롤링 진행
     driver.get(url) # 페이지 이동
     container = driver.find_element(By.CLASS_NAME, 'type2').find_elements(By.TAG_NAME, 'tr') # 주가 정보 컨테이너
