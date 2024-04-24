@@ -14,19 +14,19 @@ def get_missing_value(data):
 # 데이터 읽어오기
 data = pd.read_csv('/Users/kimhongseok/EDA_side/data/3.csv', encoding='cp949')
 
-datad_shape = data.shape
+data_shape = data.shape
+print(data_shape)
 
-# col 확인 -> 사용자로부터 예측 모델의 결과 변수를 선택할 수 있게 한다.
-print(get_cols(data))
-print()
-target = input("결과 변수를 선택하세요 : ")
+col_list = data.columns
+print(col_list)
 
-# 데이터타입, 결측치 등을 확인 -> 사용자로부터 결측치의 범위 등을 어떻게 처리할지 선택할 수 있게 한다.
-print(data.info())
-print()
+for col in col_list:
+    col_type = type(data[col][0])
+    
+    # 데이터의 형태가 수치형인지 확인하여 서로 다르게 데이터를 보여준다. -> 구현방법 연구
+    if col_type == '<class \'str\'>': # 문자형인 경우
+        print(set(data[col].to_list()))
 
-# 숫자형 데이터에 대한 정보
-print(data.describe())
-# 문자형 데이터에 대한 정보
-print(set(data['등급'].to_list()))
-print()
+    else : # 수치형인 경우
+        print(col, col_type)
+        print(data[col].describe(), end='\n\n') # describe()를 통해 데이터의 요약본을 보여준다.
