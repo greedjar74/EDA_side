@@ -1,8 +1,6 @@
 import time
 import pandas as pd
 
-import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -38,10 +36,13 @@ container = driver.find_element(By.CLASS_NAME, 'inner_sub')
 iframe_li = container.find_elements(By.TAG_NAME, 'iframe')
 iframe_url = iframe_li[1].get_attribute('src') # 두 번째 iframe에서 '일별시세'링크를 가져온다.
 driver.get(iframe_url) # '일별시세'페이지로 이동
+current_url = driver.current_url # 현재 url
+
+driver.find_element(By.CLASS_NAME, 'pgRR').click()
+last_page = driver.find_element(By.CLASS_NAME, 'Nnavi').find_element(By.CLASS_NAME, 'on').text
 
 df = [] # 결과 파일
-current_url = driver.current_url # 현재 url
-for page in range(1, 10): # int(last_page) + 1으로 바꿔주기
+for page in range(1, 100+1): # int(last_page) + 1으로 바꿔주기
     url = current_url + f'&page={page}' # 페이지를 바꿔가면서 크롤링 진행
     driver.get(url) # 페이지 이동
     container = driver.find_element(By.CLASS_NAME, 'type2').find_elements(By.TAG_NAME, 'tr') # 주가 정보 컨테이너
@@ -89,7 +90,7 @@ for page in range(1, 10): # int(last_page) + 1으로 바꿔주기
                 '거래량':tmp_li[6]
             }
             df.append(df_tmp) # 결과 변수에 추가
-    time.sleep(1)
+    time.sleep(0.3)
 
 df = pd.DataFrame(df) # 리스트에서 dataframe형태로 변환
 print(df)
